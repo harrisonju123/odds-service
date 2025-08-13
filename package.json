@@ -1,12 +1,17 @@
 {
   "name": "odds-service",
   "private": true,
+  "packageManager": "npm@10.0.0",
   "workspaces": ["packages/*"],
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
     "migrate:up": "psql \"$DATABASE_URL\" -f infra/sql/001_init.sql",
-    "migrate:down": "psql \"$DATABASE_URL\" -f infra/sql/001_down.sql"
+    "migrate:down": "psql \"$DATABASE_URL\" -f infra/sql/001_down.sql",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down"
   },
   "devDependencies": { "turbo": "^2.0.0" }
 }
