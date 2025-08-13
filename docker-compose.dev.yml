@@ -3,27 +3,33 @@ version: '3.8'
 services:
   api:
     build:
-      context: ..
+      context: .
       dockerfile: packages/api/Dockerfile
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DATABASE_URL}
+      ODDS_API_KEY: ${ODDS_API_KEY}
       PORT: 3000
     volumes:
-      - ../packages/api:/app/packages/api
+      - ./packages/api:/app/packages/api
       - /app/packages/api/node_modules
     command: npm run dev
+    restart: unless-stopped
 
   worker:
     build:
-      context: ..
+      context: .
       dockerfile: packages/worker/Dockerfile
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DATABASE_URL}
+      ODDS_API_KEY: ${ODDS_API_KEY}
     volumes:
-      - ../packages/worker:/app/packages/worker
+      - ./packages/worker:/app/packages/worker
       - /app/packages/worker/node_modules
     command: npm run dev
+    restart: unless-stopped
+    depends_on:
+      - api
