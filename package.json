@@ -1,0 +1,12 @@
+{
+  "name": "odds-service",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "migrate:up": "psql \"$DATABASE_URL\" -f infra/sql/001_init.sql",
+    "migrate:down": "psql \"$DATABASE_URL\" -f infra/sql/001_down.sql"
+  },
+  "devDependencies": { "turbo": "^2.0.0" }
+}
